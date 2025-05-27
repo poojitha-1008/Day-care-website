@@ -20,7 +20,6 @@ import tempfile
 
 app = Flask(__name__)
 CORS(app)
-
 # MySQL Configuration
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'root'
@@ -32,9 +31,8 @@ bcrypt = Bcrypt(app)
 app.config['JWT_SECRET_KEY'] = 'your_super_secret_key'
 jwt = JWTManager(app)
 
-# -------------------------
+
 # Admin Login
-# -------------------------
 @app.route("/adminlogin", methods=['POST'])
 def admin_login():
     data = request.json
@@ -62,9 +60,9 @@ def admin_login():
         })
     return jsonify({"message": "Login failed: Incorrect password"}), 401
 
-# -------------------------
+
 # Faculty Login
-# -------------------------
+
 @app.route("/facultylogin", methods=['POST'])
 def faculty_login():
     data = request.json
@@ -93,9 +91,9 @@ def faculty_login():
 
     return jsonify({"message": "Login failed"}), 401
 
-# -------------------------
+
 # Parent Login
-# -------------------------
+
 @app.route("/parentlogin", methods=['POST'])
 def parent_login():
     data = request.json
@@ -123,9 +121,9 @@ def parent_login():
         })
     return jsonify({"message": "Login failed"}), 401
 
-# -------------------------
+
 # Admin Register
-# -------------------------
+
 @app.route("/adminregister", methods=['POST'])
 def admin_register():
     data = request.json
@@ -146,9 +144,9 @@ def admin_register():
     mysql.connection.commit()
     return jsonify({"message": "Registration successful"}), 201
 
-# -------------------------
+
 # Add Faculty
-# -------------------------
+
 @app.route("/add_faculty", methods=["POST"])
 def add_faculty():
     data = request.json
@@ -166,9 +164,9 @@ def add_faculty():
     mysql.connection.commit()
     return jsonify({"message": "Faculty added successfully"}), 201
 
-# -------------------------
+
 # Add Student & Parent
-# -------------------------
+
 @app.route("/add_student", methods=["POST"])
 def add_student():
     data = request.json
@@ -195,9 +193,9 @@ def add_student():
     mysql.connection.commit()
     return jsonify({"message": "Student and parent added successfully"}), 201
 
-# -------------------------
+
 # View All Faculties
-# -------------------------
+
 @app.route("/viewallfaculties", methods=['GET'])
 def view_all_faculties():
     cur = mysql.connection.cursor()
@@ -208,7 +206,6 @@ def view_all_faculties():
     return jsonify(results), 200
 
 
-# -------------------------
 @app.route("/viewallparents", methods=['GET'])
 def view_all_parents():
     cur = mysql.connection.cursor()
@@ -219,9 +216,8 @@ def view_all_parents():
     return jsonify(results), 200
 
 
-# -------------------------
 # Run Server
-# -------------------------
+
 @app.route('/edit_faculty/<int:faculty_id>', methods=['POST'])
 def edit_faculty(faculty_id):
     data = request.get_json()
@@ -391,10 +387,6 @@ def get_notes_by_parent(parentid):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
-
-
-
 @app.route('/parent_details/<int:parentid>', methods=['GET'])
 def get_parent_details_with_progress(parentid):
     try:
@@ -461,15 +453,12 @@ def chat():
 
     return jsonify({"response": response})
 
-
-
 print(app.url_map)
 
 if __name__ == "__main__":
     app.run(debug=True)
     print(app.url_map)
     
-
 **Key- Technology**
 1.	Flask (Python Web Framework):
 Flask is a lightweight and flexible web framework that provides the backbone for your application's backend. It handles HTTP requests, routing, and integrates with databases to serve dynamic content. Flask’s simplicity allows rapid development and easy integration of extensions such as authentication and PDF generation.
@@ -512,8 +501,6 @@ Parents can download PDF reports summarizing their child’s progress notes, aut
 An integrated chatbot interface handles user inquiries, providing quick automated responses based on pre-defined categories. It also recognizes phone numbers to initiate personalized follow-ups, enhancing user engagement.
 8.	Database Integration and Security
 The backend leverages MySQL for robust data storage, with careful query parameterization to avoid SQL injection risks. Passwords are stored securely using bcrypt encryption, and sensitive data access is controlled through JWT tokens.
-
-**outputs:**
 
 **Future research:**
       Future research in the domain of digital daycare management can focus on several areas to enhance the system's intelligence, security, and personalization. One major research direction is the integration of Artificial Intelligence (AI) and Machine Learning (ML) to monitor children’s activity patterns, detect anomalies in behavior, and provide personalized developmental insights to parents and staff. Another promising area is the use of IoT (Internet of Things) devices such as smart wearables or sensors for real-time health monitoring (body temperature, movement, sleep tracking), ensuring better child safety and care.
